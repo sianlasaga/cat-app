@@ -10,8 +10,14 @@ import CatCardList from '../components/AppCard/CatCardList';
 import withProviders from '../hoc/withProviders';
 
 const HomePage = () => {
-  const { breeds, selectBreedId, catResult, hasReachedEnd, loadMore } =
-    useCatContext();
+  const {
+    breeds,
+    selectBreedId,
+    selectedBreedId,
+    catResult,
+    hasReachedEnd,
+    loadMore,
+  } = useCatContext();
   const breedOptions = useMemo(
     () => breeds.map((breed) => ({ value: breed.id, label: breed.name })),
     [breeds]
@@ -33,6 +39,7 @@ const HomePage = () => {
             options={breedOptions}
             onChange={handleSelectBreed}
             placeholder="Select breed"
+            value={selectedBreedId}
           />
         </Col>
       </Row>

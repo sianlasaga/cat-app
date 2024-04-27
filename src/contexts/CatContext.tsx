@@ -5,6 +5,7 @@ import {
   useEffect,
   useCallback,
 } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { CatBreed, Cat } from '../types/CatTypes';
 import { fetchBreeds, fetchCatsByBreed } from '../api/cat';
@@ -15,7 +16,7 @@ type CatContextData = {
   breeds: CatBreed[];
   catResult: Cat[];
   loadMore: () => void;
-  selectedBreedId: CatBreed['id'] | null;
+  selectedBreedId: CatBreed['id'];
   selectBreedId: (breedId: CatBreed['id']) => void;
   hasReachedEnd: boolean;
 };
@@ -27,14 +28,13 @@ type Props = {
 const CatContext = createContext<CatContextData | undefined>(undefined);
 
 const CatProvider = ({ children }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedBreedId = searchParams.get('breedId') ?? '';
   const [breeds, setBreeds] = useState<CatBreed[]>([]);
   const [catResult, setCatResult] = useState<Cat[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [selectedBreedId, setSelectedBreedId] = useState<CatBreed['id'] | null>(
-    null
-  );
   const { showToast } = useToast();
 
   const getCatsByBreedId = useCallback(
@@ -85,15 +85,13 @@ const CatProvider = ({ children }: Props) => {
 
   // fetch cats when selectedBreedId and/or page changes
   useEffect(() => {
-    if (selectedBreedId) {
-      getCatsByBreedId(selectedBreedId);
-    }
+    getCatsByBreedId(selectedBreedId);
   }, [selectedBreedId, page]);
 
   const selectBreedId = useCallback(
     (breedId: CatBreed['id']) => {
-      if (selectedBreedId === breedId) return;
-      setSelectedBreedId(breedId);
+      if (breedId === selectedBreedId) return;
+      setSearchParams({ breedId });
       setPage(1);
       setHasReachedEnd(false);
     },

@@ -16,7 +16,7 @@ const AppSelect: React.FC<AppSelectProps> = ({
     <Form>
       <FormLabel>Breed</FormLabel>
       <FormSelect {...rest}>
-        {placeholder && <option>{placeholder}</option>}
+        {placeholder && <option value="">{placeholder}</option>}
         {options.map((option) => (
           <option key={option.value || 'default-option'} value={option.value}>
             {option.label}
