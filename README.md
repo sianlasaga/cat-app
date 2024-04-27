@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# IONA Cats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a coding exercise for IONA's recruitment process. The app fetches data from the [Cats API](https://thecatapi.com/), allowing users to browse and display information about various cat breeds. Users can view a list of cats for a selected breed and access detailed information about individual cats.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (v18.18.0 or higher)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. Create an `.env` file and make sure to fill up the required envs based on `.env.example`.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+VITE_API_URL=https://api.thecatapi.com/v1
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+3. Install dependencies
+
+```bash
+npm install
+```
+
+3. Run the app
+
+```bash
+npm run dev
+```
+
+The application will be accessible by default at http://localhost:5173/.
+
+## Usage
+
+- Select breed a breed from the dropdown to show the cats for the selected breed.
+- Click `Load more` to load more cats on the selected breed.
+- Click `View details` to show the detailed info of the selected cat.
+- Click `Back` from the cat details page to go back to the home page that shows the list of cats from previous selected breed.
+
+## Technologies used
+
+- ReactJS (Vite)
+- react-router-dom
+- react-bootstrap
+- axios
+- Context API (for state management)
+- styled-components (for styling)
+- typescript
+- eslint
+- husky and lint-staged (for commit hooks)
