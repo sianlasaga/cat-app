@@ -3,12 +3,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { useCatContext } from '../contexts/CatContext';
+import CatProvider, { useCatContext } from '../contexts/CatContext';
 import AppSelect from '../components/AppSelect';
 import { CatBreed } from '../types/CatTypes';
 import CatCardList from '../components/AppCard/CatCardList';
+import withProviders from '../hoc/withProviders';
 
-const Home = () => {
+const HomePage = () => {
   const { breeds, selectBreedId, catResult, hasReachedEnd, loadMore } =
     useCatContext();
   const breedOptions = useMemo(
@@ -46,4 +47,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withProviders(CatProvider)(HomePage);
