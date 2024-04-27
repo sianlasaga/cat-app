@@ -1,16 +1,23 @@
 import {
   createContext,
   useState,
-  useContext
+  useContext,
+  useEffect,
+  useCallback
 } from 'react';
+
 import { CatBreed, Cat } from '../types/CatTypes';
+import { fetchBreeds, fetchCatsByBreed } from '../api/cat';
+import { useToast } from './ToastProvider';
+import { DEFAULT_API_ERROR_MESSAGE } from '../constants';
 
 type CatContextData = {
   breeds: CatBreed[];
-  currentBreed: CatBreed | null;
-  setCurrentBreed: (breed: CatBreed) => void;
   catResult: Cat[];
-  selectedCat: Cat | null;
+  loadMore: () => void;
+  selectedBreedId: CatBreed['id'] | null;
+  selectBreedId: (breedId: CatBreed['id']) => void;
+  hasReachedEnd: boolean;
 }
 
 type Props = {
@@ -20,19 +27,81 @@ type Props = {
 const CatContext = createContext<CatContextData | undefined>(undefined);
 
 const CatProvider = ({ children }: Props) => {
-  const [breeds,] = useState<CatBreed[]>([]);
-  const [currentBreed, setCurrentBreed] = useState<CatBreed | null>(null);
-  const [catResult,] = useState<Cat[]>([]);
-  const [selectedCat,] = useState<Cat | null>(null);
+  const [breeds, setBreeds] = useState<CatBreed[]>([]);
+  const [catResult, setCatResult] = useState<Cat[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [selectedBreedId, setSelectedBreedId] = useState<CatBreed['id'] | null>(null)
+  const { showToast } = useToast();
+
+  const getCatsByBreedId = useCallback(async (selectedBreedId: CatBreed['id']) => {
+    if (isFetching) return;
+    if (!selectedBreedId) {
+      setCatResult([]);
+      return;
+    }
+    setIsFetching(true);
+    try {
+      const cats = await fetchCatsByBreed(selectedBreedId, { page });
+      if (page === 1) {
+        setCatResult(cats);
+        return;
+      }
+      // filter if result is already in the list and if yes, don't add it and set hasReachedEnd to true
+      const newCats = cats.filter((cat: Cat) => !catResult.some(c => c.id === cat.id));
+      if (newCats.length === 0) {
+        setHasReachedEnd(true);
+        return;
+      }
+      setCatResult([...catResult, ...newCats]);
+
+    } catch (error) {
+      showToast(DEFAULT_API_ERROR_MESSAGE, 'danger')
+    } finally {
+      setIsFetching(false);
+    }
+  }, []);
+
+  const getBreeds = useCallback(async () => {
+    try {
+      const breeds = await fetchBreeds();
+      setBreeds(breeds);
+    } catch (error) {
+      showToast(DEFAULT_API_ERROR_MESSAGE, 'danger')
+    }
+  }, []);
+
+  useEffect(() => {
+    getBreeds();
+  }, []);
+
+  useEffect(() => {
+    if (selectedBreedId) {
+      getCatsByBreedId(selectedBreedId);
+    }
+  }, [selectedBreedId, page]);
+
+  const selectBreedId = useCallback((breedId: CatBreed['id']) => {
+    if (selectedBreedId === breedId) return;
+    setSelectedBreedId(breedId);
+    setPage(1);
+    setHasReachedEnd(false);
+  }, [selectedBreedId]);
+
+  const loadMore = useCallback(() => {
+    if (hasReachedEnd) return;
+    setPage(page + 1);
+  }, [hasReachedEnd, page]);
 
   return (
-    <CatContext.Provider value={{ breeds, currentBreed, setCurrentBreed, catResult, selectedCat }}>
+    <CatContext.Provider value={{ breeds, selectedBreedId, catResult, loadMore, selectBreedId, hasReachedEnd }}>
       {children}
     </CatContext.Provider>
   )
 }
 
-export const useCat = () => {
+export const useCatContext = () => {
   const context = useContext(CatContext);
   if (context === undefined) {
     throw new Error('useCat must be used within a CatProvider');
