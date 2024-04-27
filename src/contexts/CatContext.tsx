@@ -10,7 +10,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { CatBreed, Cat } from '../types/CatTypes';
 import { fetchBreeds, fetchCatsByBreed } from '../api/cat';
-import { useToast } from './ToastProvider';
+import { useToast } from './ToastContext';
 import { DEFAULT_API_ERROR_MESSAGE } from '../constants';
 
 interface CatContextData {

@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { fetchCat } from '../api/cat';
-import { useToast } from '../contexts/ToastProvider';
+import { useToast } from '../contexts/ToastContext';
 import { DEFAULT_API_ERROR_MESSAGE } from '../constants';
 import { Cat } from '../types/CatTypes';
 import CatDetailsCard from '../components/AppCard/CatDetailsCard';
