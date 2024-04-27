@@ -43,7 +43,7 @@ const CatPage = () => {
       return (
         <Row>
           <Col>
-            <h2>Sorry, we couldn't find this cat. Miau?</h2>
+            <h2>{`Sorry, we couldn't find this cat. Miau?`}</h2>
           </Col>
         </Row>
       );

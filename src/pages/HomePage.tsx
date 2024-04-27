@@ -5,11 +5,10 @@ import Col from 'react-bootstrap/Col';
 
 import CatProvider, { useCatContext } from '../contexts/CatContext';
 import AppSelect from '../components/AppSelect';
-import { CatBreed } from '../types/CatTypes';
 import CatCardList from '../components/AppCard/CatCardList';
 import withProviders from '../hoc/withProviders';
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const {
     breeds,
     selectBreedId,
@@ -25,7 +24,7 @@ const HomePage = () => {
 
   const handleSelectBreed = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
-      selectBreedId(event.target.value as CatBreed['id']);
+      selectBreedId(event.target.value);
     },
     [selectBreedId]
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Toast, { ToastProps } from 'react-bootstrap/Toast';
 import styled from 'styled-components';
 

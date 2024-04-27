@@ -24,5 +24,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    '@typescript-eslint/no-floating-promises': 'off',
+    'react-refresh/only-export-components': 'off',
   },
 };

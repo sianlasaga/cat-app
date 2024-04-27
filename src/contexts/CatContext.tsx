@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   createContext,
   useState,
@@ -12,18 +13,18 @@ import { fetchBreeds, fetchCatsByBreed } from '../api/cat';
 import { useToast } from './ToastProvider';
 import { DEFAULT_API_ERROR_MESSAGE } from '../constants';
 
-type CatContextData = {
+interface CatContextData {
   breeds: CatBreed[];
   catResult: Cat[];
   loadMore: () => void;
   selectedBreedId: CatBreed['id'];
   selectBreedId: (breedId: CatBreed['id']) => void;
   hasReachedEnd: boolean;
-};
+}
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
 const CatContext = createContext<CatContextData | undefined>(undefined);
 

@@ -8,7 +8,7 @@ const withBackButton = (Component: React.FC) => {
     window.history.back();
   };
 
-  return () => (
+  const WrappedComponent: React.FC = () => (
     <>
       <Row>
         <Col>
@@ -18,6 +18,10 @@ const withBackButton = (Component: React.FC) => {
       <Component />
     </>
   );
+
+  WrappedComponent.displayName = `withBackButton(${Component.displayName ?? Component.name})`;
+
+  return WrappedComponent;
 };
 
 export default withBackButton;

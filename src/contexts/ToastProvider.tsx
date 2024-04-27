@@ -4,13 +4,13 @@ import { Variant } from 'react-bootstrap/esm/types';
 import { DEFAULT_TOAST_DURATION, DEFAULT_TOAST_VARIANT } from '../constants';
 import AppToast from '../components/AppToast';
 
-type ToastContextData = {
+interface ToastContextData {
   showToast: (message: string, variant?: Variant) => void;
-};
+}
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
 const ToastContext = createContext<ToastContextData | undefined>(undefined);
 
@@ -26,7 +26,7 @@ const ToastProvider = ({ children }: Props) => {
    * @param variant The variant of the toast message. Can be 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'. Default is 'primary'.
    */
   const showToast = useCallback((message: string, variant?: Variant) => {
-    setVariant(variant || DEFAULT_TOAST_VARIANT);
+    setVariant(variant ?? DEFAULT_TOAST_VARIANT);
     setMessage(message);
     setShow(true);
   }, []);
