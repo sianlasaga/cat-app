@@ -13,10 +13,10 @@ const AppToast: React.FC<AppToastProps> = ({ message, ...rest }) => {
       </Toast.Header>
     </Toast>
   );
-}
+};
 
 export default styled(AppToast)`
   position: fixed;
   bottom: 20px;
   right: 20px;
-`
+`;

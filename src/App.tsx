@@ -4,13 +4,11 @@ import Home from './pages/Home';
 import Cat from './pages/Cat';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+import './App.css';
 import CatProvider from './contexts/CatContext';
 import ToastProvider from './contexts/ToastProvider';
 
-
 function App() {
-
   return (
     <ToastProvider>
       <CatProvider>
@@ -22,7 +20,7 @@ function App() {
         </BrowserRouter>
       </CatProvider>
     </ToastProvider>
-  )
+  );
 }
 
-export default App
+export default App;

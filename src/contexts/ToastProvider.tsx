@@ -21,7 +21,7 @@ const ToastProvider = ({ children }: Props) => {
 
   /**
    * Show a toast message
-   * 
+   *
    * @param message The message to display
    * @param variant The variant of the toast message. Can be 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'. Default is 'primary'.
    */
