@@ -19,8 +19,7 @@ const CatPreviewCard: React.FC<CatCardProps> = ({ cat, ...rest }) => {
     <StyledCard {...rest}>
       <Card.Img variant="top" src={cat.url} />
       <Card.Body className="p-3">
-        {/* TODO: Implement redirection to cat page */}
-        <Link to="">
+        <Link to={`/cat/${cat.id}`}>
           <Button className="w-100" variant="primary">
             View details
           </Button>

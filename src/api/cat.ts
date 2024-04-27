@@ -23,6 +23,6 @@ export const fetchCatsByBreed = async (
 };
 
 export const fetchCat = async (breedId: string) => {
-  const response = await axios.get(`/images/search?breed_id=${breedId}`);
+  const response = await axios.get(`/images/${breedId}`);
   return response.data;
 };
